@@ -11,5 +11,8 @@
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
     "@types/node": "^14.0.22"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0"
   }
 }
