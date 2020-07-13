@@ -1,8 +1,12 @@
 import Command from './Command';
 import { Message } from 'discord.js';
+import ownerOnly from './Middleware/ownerOnly';
 
 class PingCommand extends Command {
-    run = (message: Message) => message.reply('pong');
+    @ownerOnly
+    run(message: Message) {
+        return message.reply('pong');
+    }
 }
 
 export default PingCommand;
