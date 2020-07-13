@@ -1,15 +1,8 @@
 {
   "scripts": {
-    "build": "yarn build:types && yarn build:js",
-    "build:types": "tsc --emitDeclarationOnly",
-    "build:js": "babel src --out-dir out --extensions \".ts\" --source-maps inline",
-    "watch": "tsc -p ./tsconfig.json -w --preserveWatchOutput"
+    "build": "tsc --declarationMap"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.4",
-    "@babel/core": "^7.10.4",
-    "@babel/preset-env": "^7.10.4",
-    "@babel/preset-typescript": "^7.10.4",
     "@types/node": "^14.0.22"
   },
   "dependencies": {
