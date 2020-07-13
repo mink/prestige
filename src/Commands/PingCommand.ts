@@ -1,7 +1,8 @@
 import Command from './Command';
+import { Message } from 'discord.js';
 
 class PingCommand extends Command {
-    run = (message) => message.reply('pong');
+    run = (message: Message) => message.reply('pong');
 }
 
 export default PingCommand;

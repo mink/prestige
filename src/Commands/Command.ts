@@ -1,5 +1,7 @@
+import { Message } from 'discord.js';
+
 class Command {
-    run = (message) => {};
+    run = (message: Message) => {};
 }
 
 export default Command;
