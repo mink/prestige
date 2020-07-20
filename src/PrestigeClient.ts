@@ -17,7 +17,7 @@ class PrestigeClient extends Client {
 
     bindMessageHandler(): void {
         this.on('message', (message: Message) => {
-            if (this.commands.has(message.content)) {
+            if (this.commands.has(process.env.CLIENT_PREFIX + message.content)) {
                 this.commands.get(message.content).run(message);
             }
         });
