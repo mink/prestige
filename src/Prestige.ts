@@ -3,11 +3,19 @@ import chalk from 'chalk';
 
 class Prestige {
     constructor(private token: string, public client: PrestigeClient) {
-        console.log(`Prestige ${chalk.gray(' [prestigebot.com] ')}\n`);
+        this.motd();
+        this.login();
+    }
+
+    login(): void {
         console.log('login -> attempting');
-        client.login(token)
+        this.client.login(this.token)
             .then(() => console.log(`login -> success`))
             .catch(() => console.error(`login -> error`));
+    }
+
+    motd(): void {
+        console.log(`Prestige ${chalk.gray('[prestigebot.com]')}\n`);
     }
 }
 

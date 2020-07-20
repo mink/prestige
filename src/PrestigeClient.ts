@@ -7,9 +7,15 @@ class PrestigeClient extends Client {
 
     constructor(options?: ClientOptions) {
         super(options);
+        this.bindDefaultCommands();
+        this.bindMessageHandler();
+    }
 
+    bindDefaultCommands(): void {
         this.commands.set('ping', new PingCommand());
+    }
 
+    bindMessageHandler(): void {
         this.on('message', (message: Message) => {
             if (this.commands.has(message.content)) {
                 this.commands.get(message.content).run(message);
