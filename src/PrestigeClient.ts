@@ -3,7 +3,7 @@ import Command from './Commands/Command';
 import PingCommand from './Commands/PingCommand';
 
 class PrestigeClient extends Client {
-    public commands?: Map<string, Command> = new Map<string, Command>();
+    public commands: Map<string, Command> = new Map<string, Command>();
 
     constructor(options?: ClientOptions) {
         super(options);
