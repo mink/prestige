@@ -7,11 +7,17 @@ class PrestigeClient extends CommandoClient {
 
     constructor(options?: CommandoClientOptions) {
         super(options);
+        this.removeMessageListeners();
         this.bindDefaultCommandHandler();
     }
 
     public login(token: string): Promise<string> {
         return super.login(token);
+    }
+
+    private removeMessageListeners(): void {
+        this.removeAllListeners('message');
+        this.removeAllListeners('messageUpdate');
     }
 
     private bindDefaultCommandHandler(): void {
