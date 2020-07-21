@@ -1,26 +1,15 @@
-import { Client, ClientOptions, Message } from 'discord.js';
-import Command from './Commands/Command';
 import PingCommand from './Commands/PingCommand';
+import { CommandoClient, CommandoClientOptions } from 'discord.js-commando';
 
-class PrestigeClient extends Client {
-    public commands: Map<string, Command> = new Map<string, Command>();
-
-    constructor(options?: ClientOptions) {
+class PrestigeClient extends CommandoClient {
+    constructor(options?: CommandoClientOptions) {
         super(options);
-        this.bindDefaultCommands();
-        this.bindMessageHandler();
+        this.registry.registerGroup('default');
+        this.registry.registerCommand(PingCommand);
     }
 
-    bindDefaultCommands(): void {
-        this.commands.set('ping', new PingCommand());
-    }
-
-    bindMessageHandler(): void {
-        this.on('message', (message: Message) => {
-            if (this.commands.has(process.env.CLIENT_PREFIX + message.content)) {
-                this.commands.get(message.content).run(message);
-            }
-        });
+    public login(token: string): Promise<string> {
+        return super.login(token);
     }
 }
 
