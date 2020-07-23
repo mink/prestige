@@ -9,8 +9,8 @@ const bot = new Prestige(
     process.env.CLIENT_TOKEN,
     new PrestigeClient({
         commandPrefix: process.env.CLIENT_PREFIX,
-        owner: '688009832686419982',
-        invite: 'https://discord.gg/UbgAjHT',
+        owner: process.env.CLIENT_OWNER,
+        invite: process.env.CLIENT_INVITE,
         partials: Object.values(Discord.Constants.PartialTypes),
     }),
 );
