@@ -4,14 +4,14 @@ import { Sequelize } from 'sequelize';
 
 class Prestige {
 
-    private database: Sequelize;
+    public database: Sequelize;
 
     constructor(private token: string, public client: PrestigeClient) {
         this.motd();
         this.boot();
     }
 
-    async boot(): Promise<void> {
+    private async boot(): Promise<void> {
         const isConnected: boolean = await this.bootDatabase();
 
         if (!isConnected) {
@@ -30,7 +30,7 @@ class Prestige {
         console.log(`login -> success`);
     }
 
-    bootDatabase(): Promise<boolean> {
+    private bootDatabase(): Promise<boolean> {
         console.log('database -> connecting');
         this.database = new Sequelize({
             host: process.env.DB_HOST,
@@ -44,12 +44,12 @@ class Prestige {
         return this.database.authenticate().then(() => true).catch(() => false);
     }
 
-    attemptLogin(): Promise<boolean> {
+    private attemptLogin(): Promise<boolean> {
         console.log('login -> attempting');
         return this.client.login(this.token).then(() => true).catch(() => false);
     }
 
-    motd(): void {
+    private motd(): void {
         console.log(`Prestige ${chalk.gray('[prestigebot.com]')}\n`);
     }
 }

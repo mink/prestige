@@ -12,7 +12,7 @@ class Guild {
         this.bindDefaultCommands();
     }
 
-    bindDefaultCommands(): void {
+    private bindDefaultCommands(): void {
         this.registry.registerGroup('default');
         this.registry.registerCommand(PingCommand);
     }
