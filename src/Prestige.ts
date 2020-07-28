@@ -1,13 +1,15 @@
 import PrestigeClient from './PrestigeClient';
 import chalk from 'chalk';
 import { Sequelize } from 'sequelize';
+import { CommandoClientOptions } from 'discord.js-commando';
 
 class Prestige {
 
-    public database: Sequelize;
+    public client: PrestigeClient;
 
-    constructor(private token: string, public client: PrestigeClient) {
-        this.motd();
+    constructor(private token: string, options?: CommandoClientOptions) {
+        this.displayMotd();
+        this.client = new PrestigeClient(options);
         this.boot();
     }
 
@@ -32,7 +34,7 @@ class Prestige {
 
     private bootDatabase(): Promise<boolean> {
         console.log('database -> connecting');
-        this.database = new Sequelize({
+        this.client.database = new Sequelize({
             host: process.env.DB_HOST,
             username: process.env.DB_USER,
             password: process.env.DB_PASS,
@@ -41,7 +43,7 @@ class Prestige {
             logging: false,
         });
 
-        return this.database.authenticate().then(() => true).catch(() => false);
+        return this.client.database.authenticate().then(() => true).catch(() => false);
     }
 
     private attemptLogin(): Promise<boolean> {
@@ -49,7 +51,7 @@ class Prestige {
         return this.client.login(this.token).then(() => true).catch(() => false);
     }
 
-    private motd(): void {
+    private displayMotd(): void {
         console.log(`Prestige ${chalk.gray('[prestigebot.com]')}\n`);
     }
 }

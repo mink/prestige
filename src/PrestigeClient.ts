@@ -1,9 +1,11 @@
 import { CommandoClient, CommandoClientOptions } from 'discord.js-commando';
 import Guild from './Guild';
+import { Sequelize } from 'sequelize';
 
 class PrestigeClient extends CommandoClient {
 
     public prestigeGuilds: Map<string, Guild> = new Map<string, Guild>();
+    public database: Sequelize;
 
     constructor(options?: CommandoClientOptions) {
         super(options);
