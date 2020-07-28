@@ -35,7 +35,9 @@ class PrestigeClient extends CommandoClient {
         const emitError = error => this.emit('error', error);
 
         this.on('message', (message: CommandoMessage) => {
-            return this.prestigeGuilds.get('default').dispatcher
+            const guild: Guild = this.prestigeGuilds.get(message.guild.id)
+                || this.prestigeGuilds.get('default');
+            return guild.dispatcher
                 .handleMessage(message)
                 .catch(emitError);
         });
@@ -44,7 +46,9 @@ class PrestigeClient extends CommandoClient {
             oldMessage: CommandoMessage,
             newMessage: CommandoMessage
         ) => {
-            return this.prestigeGuilds.get('default').dispatcher
+            const guild: Guild = this.prestigeGuilds.get(newMessage.guild.id)
+                || this.prestigeGuilds.get('default');
+            return guild.dispatcher
                 .handleMessage(newMessage, oldMessage)
                 .catch(emitError);
         });
