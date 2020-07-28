@@ -1,6 +1,7 @@
-import { CommandoClient, CommandoClientOptions } from 'discord.js-commando';
+import { CommandoClient, CommandoClientOptions, CommandoMessage } from 'discord.js-commando';
 import Guild from './Guild';
 import { Sequelize } from 'sequelize';
+import {ClientEvents} from "discord.js";
 
 class PrestigeClient extends CommandoClient {
 
@@ -11,6 +12,7 @@ class PrestigeClient extends CommandoClient {
         super(options);
         this.removeMessageListeners();
         this.bindDefaultCommandHandler();
+        this.bindMessageListeners();
     }
 
     public login(token: string): Promise<string> {
@@ -26,6 +28,26 @@ class PrestigeClient extends CommandoClient {
         this.prestigeGuilds.set('default', new Guild(this));
         this.registry = this.prestigeGuilds.get('default').registry;
         this.dispatcher = this.prestigeGuilds.get('default').dispatcher;
+    }
+
+    private bindMessageListeners(): void {
+
+        const emitError = error => this.emit('error', error);
+
+        this.on('message', (message: CommandoMessage) => {
+            return this.prestigeGuilds.get('default').dispatcher
+                .handleMessage(message)
+                .catch(emitError);
+        });
+
+        this.on('messageUpdate', (
+            oldMessage: CommandoMessage,
+            newMessage: CommandoMessage
+        ) => {
+            return this.prestigeGuilds.get('default').dispatcher
+                .handleMessage(newMessage, oldMessage)
+                .catch(emitError);
+        });
     }
 }
 
